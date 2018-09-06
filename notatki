@@ -1,0 +1,12 @@
+babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch
+
+
+ constructor(props){
+    super(props);
+    this.removeAll = this.removeAll.bind(this); //dopisujemy do konstruktora że funkcja nie będzie ona tracic przypisania
+  }
+  
+  removeAll(){
+    // alert("Removed");
+    console.log(this.props.options);
+  }
