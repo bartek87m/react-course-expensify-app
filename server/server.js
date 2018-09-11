@@ -2,7 +2,7 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const publicPath = path.join(__dirname, '..', 'public');
-const port = process.eventNames.PORT || 3000; //zmienna, którą potrzebuje heroku zeby wystartować server
+const port = process.env.PORT || 3000; //zmienna, którą potrzebuje heroku zeby wystartować server
 
 app.use(express.static(publicPath));
 
