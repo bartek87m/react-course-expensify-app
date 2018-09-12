@@ -1,6 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
- 
+import moment from 'moment'; 
+import numeral from 'numeral';
+
 export const ExpenseListItem = ({id ,description, amount, createdAd}) => {//destrukturyzacja
     console.log(createdAd);
     return (
@@ -8,7 +10,10 @@ export const ExpenseListItem = ({id ,description, amount, createdAd}) => {//dest
         <Link to={`/edit/${id}`}>              
              <h3>Description: {description}</h3>
        </Link>
-        <p> {createdAd} - {amount}</p> 
+        <p> 
+        {moment(createdAd).format('MMMM Do, YYYY')}
+         - 
+         {numeral(amount / 100).format("$0,0.00")}</p> 
    
     </div>
     )
