@@ -1,11 +1,11 @@
 Arguments: 
-  /usr/bin/node /usr/bin/yarn remove webpack-dev-server
+  /usr/bin/node /usr/bin/yarn install --production
 
 PATH: 
   /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
 
 Yarn version: 
-  1.9.4
+  1.7.0
 
 Node version: 
   8.11.4
@@ -14,10 +14,13 @@ Platform:
   linux x64
 
 Trace: 
-  Error: connect EHOSTUNREACH 104.16.21.35:443
-      at Object._errnoException (util.js:992:11)
-      at _exceptionWithHostPort (util.js:1014:20)
-      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1186:14)
+  SyntaxError: /home/bart/Dropbox/react kurs/expensity app/package.json: Unexpected token } in JSON at position 1230
+      at JSON.parse (<anonymous>)
+      at /usr/lib/node_modules/yarn/lib/cli.js:1130:59
+      at Generator.next (<anonymous>)
+      at step (/usr/lib/node_modules/yarn/lib/cli.js:98:30)
+      at /usr/lib/node_modules/yarn/lib/cli.js:109:13
+      at <anonymous>
 
 npm manifest: 
   {
@@ -26,10 +29,12 @@ npm manifest:
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-      "serve": "live-server public/",
-      "build": "webpack",
+      "build:dev": "webpack",
+      "build:prod": "webpack -p --env production",
       "dev-server": "webpack-dev-server",
-      "test": "jest --config=jest.config.json"
+      "test": "jest --config=jest.config.json",
+      "start": "node server/server.js",
+      "heroku-postbuild": "yarn run build:prod"
     },
     "dependencies": {
       "babel-cli": "6.24.1",
@@ -40,11 +45,8 @@ npm manifest:
       "babel-preset-env": "1.5.2",
       "babel-preset-react": "6.24.1",
       "css-loader": "^1.0.0",
-      "enzyme": "^3.5.0",
-      "enzyme-adapter-react-16": "^1.3.1",
-      "enzyme-to-json": "^3.3.4",
-      "jest": "^23.5.0",
-      "live-server": "^1.2.0",
+      "express": "^4.16.3",
+      "extract-text-webpack-plugin": "^3.0.2",
       "moment": "^2.22.2",
       "node-sass": "^4.9.2",
       "normalize.css": "^8.0.0",
@@ -56,13 +58,20 @@ npm manifest:
       "react-modal": "^3.5.1",
       "react-redux": "^5.0.7",
       "react-router-dom": "^4.3.1",
-      "react-test-renderer": "^16.4.2",
       "redux": "^4.0.0",
       "sass-loader": "^7.1.0",
       "style-loader": "^0.21.0",
       "uuid": "^3.3.2",
       "validator": "^10.4.0",
-      "webpack": "3.1.0"
+      "webpack": "3.1.0",
+    },
+    "devDependencies": {
+      "enzyme": "^3.5.0",
+      "enzyme-adapter-react-16": "^1.3.1",
+      "enzyme-to-json": "^3.3.4",
+      "jest": "^23.5.0",
+      "react-test-renderer": "^16.4.2",
+      "webpack-dev-server": "2.5.1"
     }
   }
 
@@ -240,7 +249,7 @@ Lockfile:
       co "^4.6.0"
       json-stable-stringify "^1.0.1"
   
-  ajv@^5.1.0, ajv@^5.1.5, ajv@^5.3.0:
+  ajv@^5.0.0, ajv@^5.1.0, ajv@^5.1.5, ajv@^5.3.0:
     version "5.5.2"
     resolved "https://registry.yarnpkg.com/ajv/-/ajv-5.5.2.tgz#73b5eeca3fab653e3d3f9422b341ad42205dc965"
     dependencies:
@@ -470,7 +479,7 @@ Lockfile:
     version "1.5.2"
     resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
   
-  async@^2.1.2, async@^2.1.4:
+  async@^2.1.2, async@^2.1.4, async@^2.4.1:
     version "2.6.1"
     resolved "https://registry.yarnpkg.com/async/-/async-2.6.1.tgz#b245a23ca71930044ec53fa46aa00a3e87c6a610"
     dependencies:
@@ -2390,9 +2399,9 @@ Lockfile:
       jest-message-util "^23.4.0"
       jest-regex-util "^23.3.0"
   
-  express@^4.13.3:
+  express@^4.13.3, express@^4.16.3:
     version "4.16.3"
-    resolved "https://registry.yarnpkg.com/express/-/express-4.16.3.tgz#6af8a502350db3246ecc4becf6b5a34d22f7ed53"
+    resolved "http://registry.npmjs.org/express/-/express-4.16.3.tgz#6af8a502350db3246ecc4becf6b5a34d22f7ed53"
     dependencies:
       accepts "~1.3.5"
       array-flatten "1.1.1"
@@ -2460,6 +2469,15 @@ Lockfile:
       regex-not "^1.0.0"
       snapdragon "^0.8.1"
       to-regex "^3.0.1"
+  
+  extract-text-webpack-plugin@^3.0.2:
+    version "3.0.2"
+    resolved "https://registry.yarnpkg.com/extract-text-webpack-plugin/-/extract-text-webpack-plugin-3.0.2.tgz#5f043eaa02f9750a9258b78c0a6e0dc1408fb2f7"
+    dependencies:
+      async "^2.4.1"
+      loader-utils "^1.1.0"
+      schema-utils "^0.3.0"
+      webpack-sources "^1.0.1"
   
   extsprintf@1.3.0:
     version "1.3.0"
@@ -5756,6 +5774,12 @@ Lockfile:
   sax@^1.2.4:
     version "1.2.4"
     resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
+  
+  schema-utils@^0.3.0:
+    version "0.3.0"
+    resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-0.3.0.tgz#f5877222ce3e931edae039f17eb3716e7137f8cf"
+    dependencies:
+      ajv "^5.0.0"
   
   schema-utils@^0.4.5:
     version "0.4.5"
