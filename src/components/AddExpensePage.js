@@ -1,12 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import ExpenseForm from "./ExpenseForm";
-import {addExpense} from '../actions/expenses';
+import {startAddExpense} from '../actions/expenses';
 
 export class AddExpensePage extends React.Component{
     onSubmit = (expense) => {
         // props.dispatch(addExpense(expense));
-        this.props.addExpense(expense)
+        console.log(expense)
+        this.props.startAddExpense(expense)
         this.props.history.push('/');//tak jakby ktoś kliknoł link
     } 
     render() {
@@ -21,10 +22,8 @@ export class AddExpensePage extends React.Component{
     }
 }
 
-
-
 const mapDispatchToProps = (dispatch) => ({ //pozwala zwrócić dispathc poza komponentem
-    addExpense: (expense) => dispatch(addExpense(expense))
+    startAddExpense: (expense) => dispatch(startAddExpense(expense))
     
 })
 

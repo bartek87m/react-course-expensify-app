@@ -10,6 +10,8 @@ import {addExpense} from './actions/expenses'
 import 'normalize.css/normalize.css'
 import './styles/scyles.scss';
 import 'react-dates/lib/css/_datepicker.css';
+import './firebase/firebase'; //uruchamia kod który importuje
+// import './playground/promises'
 
 const store = configureStore();
 
