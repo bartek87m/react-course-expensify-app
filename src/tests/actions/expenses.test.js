@@ -1,10 +1,20 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk';
-import {startAddExpense, addExpense, editExpense, removeExpense } from  '../../actions/expenses';
+import {startAddExpense, addExpense, editExpense,startSetExpenses ,removeExpense, setExpenses } from  '../../actions/expenses';
 import expenses from '../fixtures/expenses';
 import database from '../../firebase/firebase';
+import expensesReducer from '../../reducers/expenses'
 
 const createMockStore = configureMockStore([thunk]);
+
+beforeEach((done) => {
+    const expensesData = {}
+    expenses.forEach(({id, description, note, amount, createdAd}) => {
+        expensesData[id] = {description, note, amount, createdAd};
+    })
+    //dzięki done mamy pewność że zaden test się nie zaczniepuki firebase nie zsynchronizuje danych
+    database.ref('expenses').set(expensesData).then(() => done());
+})
 
 test('should setup remove expense action object', () =>{
     const action = removeExpense({id: '123abc'});
@@ -89,21 +99,33 @@ test ('Should add expense with default to database and store', (done) => {
     })
 });
 
+test('should setup set expenses actin object with data', () => {
+    const action = setExpenses(expenses);
+    expect(action).toEqual({
+        type: 'SET EXPENSES',
+        expenses
+    })
+});
 
+test('should set expenses', () => {
+    const action = {
+        type: 'SET EXPENSES',
+        expenses: [expenses[1]]
+    }
+    const state = expensesReducer(expenses, action)
+    expect(state).toEqual([expenses[1]])
+});
 
-// test ('should setup addexpense action object with default values', () =>{
-    
-//     const action = addExpense();
-//     expect(action).toEqual({
-//         type: 'ADD EXPENSE',
-//         expense: {
-//             id: expect.any(String),
-//             description: '', 
-//             note: '', 
-//             amount: 0, 
-//             createdAd: 0
-//         }        
-//     })
+test('should fetch the expenses from database', () => {
+    const store = createMockStore({});
+    store.dispatch(startSetExpenses()).then(() => {
+        const actions = store.getActions();
+        expect(actions[0]).toEqual({
+            type: 'SET EXPENSES',
+            expenses
+        });
+        done();
+    })
+});
 
-// })
 

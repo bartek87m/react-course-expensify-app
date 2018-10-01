@@ -21,4 +21,4 @@ export default () => {
 
 //store creation
 
-//combine reducer pozwala na skombinowanie kilku reducerów w jwden
+//combine reducer pozwala na skombinowanie kilku reducerów w jeden

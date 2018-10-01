@@ -22,7 +22,7 @@ export class AddExpensePage extends React.Component{
     }
 }
 
-const mapDispatchToProps = (dispatch) => ({ //pozwala zwrócić dispathc poza komponentem
+const mapDispatchToProps = (dispatch) => ({ //pozwala zwrócić dispatch poza komponentem
     startAddExpense: (expense) => dispatch(startAddExpense(expense))
     
 })
