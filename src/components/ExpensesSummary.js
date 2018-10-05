@@ -20,7 +20,6 @@ export const ExpensesSummary = (props) => {
     }
     
 
-
 const mapStateProps = (state) => {
     const visibleExpenses = selecrtedExpenses(state.expenses, state.filters)
     return {

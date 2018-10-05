@@ -2,15 +2,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux'; // provider daje komponentom dostęp do store
-import AppRouter from './routers/AppRouter.js'
+import AppRouter, { history } from './routers/AppRouter.js'
 import configureStore from './store/configureStore'
+import { login, logout } from './actions/auth'
 import {startSetExpenses} from './actions/expenses'
-// import {setTextFilter} from './actions/filters'
 // import getVisibleExpenses from './selectors/expenses'
 import 'normalize.css/normalize.css'
 import './styles/scyles.scss';
 import 'react-dates/lib/css/_datepicker.css';
-import './firebase/firebase'; //uruchamia kod który importuje
+import { firebase } from './firebase/firebase'; //uruchamia kod który importuje
 // import './playground/promises'
 
 const store = configureStore();
@@ -21,16 +21,31 @@ const jsx = (
     </Provider>
    
 );
+let hasRendered = false;
+const renderApp = () => {
+    if(!hasRendered){ //chcemy tylko raz renderować aplikacja, dlatego sprawdamy czy już jest zarenderowana
+        ReactDOM.render(jsx , document.getElementById('app'));
+        hasRendered = true;
+    }
+};
 
-const expenses = {
-    imie: 'Bartek'
-}
 
 ReactDOM.render(<p>Loadin...</p> , document.getElementById('app'));
 
-store.dispatch(startSetExpenses()).then(() => {
-    ReactDOM.render(jsx , document.getElementById('app'));
-})
+firebase.auth().onAuthStateChanged((user) => {
+    if(user){
+        store.dispatch(login(user.uid));
+        store.dispatch(startSetExpenses()).then(() => {
+        renderApp();
+        if(history.location.pathname === '/')
+        history.push('/dashboard')
+    });        
+    }else{
+        store.dispatch(logout());
+        renderApp();
+        history.push('/');
+    }
+});
 
 
 
