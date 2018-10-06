@@ -4,11 +4,11 @@ import createHistory from 'history/createBrowserHistory'
 import ExpenseDashboardPage from '../components/ExpenseDashboardPage';
 import AddExpensePage from '../components/AddExpensePage';
 import EditExpensePage from '../components/EditExpensePage';
-import HelpPage from '../components/HelpPage';
 import NotFoundpPage from '../components/NotFoundPage';
 import Header from '../components/Header';
 import LoginPage from '../components/LoginPage';
 import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 
 //tworzymy swoją historym którą również zaściankowo tworzy BrowseRouter 
 // ale tutaj my tworzymy swoją żebyśmy mogli uzyc history nie tylko w komponentach
@@ -22,11 +22,10 @@ const AppRouter = () => (
         <div>
             <Header />   
             <Switch>
-                <Route path="/" exact={true} component={LoginPage} /> 
+                <PublicRoute path="/" exact={true} component={LoginPage} /> 
                 <PrivateRoute path="/dashboard" exact={true} component={ExpenseDashboardPage} /> 
                 <PrivateRoute path="/create" component={AddExpensePage} />
                 <PrivateRoute path="/edit/:id" component={EditExpensePage} />
-                <Route path="/help" component={HelpPage} />
                 <Route component={NotFoundpPage} />
             </Switch> 
         </div>  
