@@ -1,0 +1,20 @@
+.button{
+    background-color: $dodgar-blue;
+    color: white;
+    border: none;
+    font-size: $font-size-large;
+    padding: $s-size;
+    font-weight: 300;
+    font-size: $s-size;
+    display: inline-block;
+    text-decoration: none;
+    line-height: 1;
+}
+
+.button-link{
+    background: none;
+}
+
+.button--secondary{
+    background-color: #888888;
+}

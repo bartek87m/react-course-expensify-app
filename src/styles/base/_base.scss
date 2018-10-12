@@ -1,11 +1,16 @@
+*{
+    box-sizing: border-box;
+}
+
 html{
     font-size: 62.5%; //dzięki takiemu ustawieniu 1rem to 10 pikseli
 }
 
 body{
-    
+    color: $dark-grey;
     font-family: Arial, Helvetica, sans-serif;
     font-size: $m-size;
+    line-height: 1.6;
 }
 
 button{

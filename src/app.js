@@ -12,6 +12,7 @@ import './styles/scyles.scss';
 import 'react-dates/lib/css/_datepicker.css';
 import { firebase } from './firebase/firebase'; //uruchamia kod który importuje
 // import './playground/promises'
+import LoadingPage from './components/LoadingPage';
 
 const store = configureStore();
 
@@ -29,8 +30,7 @@ const renderApp = () => {
     }
 };
 
-
-ReactDOM.render(<p>Loadin...</p> , document.getElementById('app'));
+ReactDOM.render(<LoadingPage/>, document.getElementById('app'));
 
 firebase.auth().onAuthStateChanged((user) => {
     if(user){
